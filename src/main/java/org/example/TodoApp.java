@@ -50,7 +50,35 @@ public class TodoApp {
                 case "exit":
                     System.out.println("Bye!");
                     scanner.close();
-                    return;
+                    return;  
+                case "clear":
+                    list.clear();
+                    System.out.println("Cleared.");
+                    break;
+                case "done":
+                    if (parts.length > 1) {
+                        try {
+                            int idx = Integer.parseInt(parts[1]);
+                            if (list.markDone(idx)) System.out.println("Marked done.");
+                            else System.out.println("Index out of range.");
+                        } catch (NumberFormatException e) {
+                            System.out.println("Invalid index.");
+                        }
+                    } else {
+                        System.out.println("Usage: done <index>");
+                    }
+                    break;
+                case "search":
+                    if (parts.length > 1) {
+                        List<String> found = list.search(parts[1]);
+                        for (int i = 0; i < found.size(); i++) {
+                            System.out.printf("%d: %s%n", i, found.get(i));
+                        }
+                        if (found.isEmpty()) System.out.println("(no matches)");
+                    } else {
+                        System.out.println("Usage: search <query>");
+                    }
+                    break;
                 default:
                     System.out.println("Unknown command. Commands: add, remove, list, exit");
             }

@@ -30,4 +30,31 @@ public class TodoList {
     public int size() {
         return items.size();
     }
+    
+    public void clear() {
+        items.clear();
+    }
+
+    public boolean markDone(int index) {
+        if (index >= 0 && index < items.size()) {
+            String item = items.get(index);
+            if (!item.startsWith("[done] ")) {
+                items.set(index, "[done] " + item);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public List<String> search(String query) {
+        List<String> result = new ArrayList<>();
+        if (query == null) return result;
+        String q = query.toLowerCase();
+        for (String item : items) {
+            if (item.toLowerCase().contains(q)) {
+                result.add(item);
+            }
+        }
+        return result;
+    }
 }
